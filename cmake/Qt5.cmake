@@ -108,7 +108,7 @@ function(QT_RCC infiles outfiles )
                 if(NOT IS_ABSOLUTE "${_RC_FILE}")
                     set(_RC_FILE "${rc_path}/${_RC_FILE}")
                 endif()
-                LIST( APPEND ${infiles} ${_RC_FILE} )
+                LIST( APPEND ${infiles} "${_RC_FILE}" )
                 set(_RC_DEPENDS ${_RC_DEPENDS} "${_RC_FILE}")
             endforeach()
             # Since this cmake macro is doing the dependency scanning for these files,

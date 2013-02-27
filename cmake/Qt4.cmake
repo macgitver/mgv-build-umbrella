@@ -104,7 +104,7 @@ MACRO(QT_RCC infiles outfiles )
             IF(NOT IS_ABSOLUTE "${_RC_FILE}")
                 SET(_RC_FILE "${rc_path}/${_RC_FILE}")
             ENDIF(NOT IS_ABSOLUTE "${_RC_FILE}")
-            LIST( APPEND ${infiles} ${_RC_FILE} )
+            LIST( APPEND ${infiles} "${_RC_FILE}" )
             SET(_RC_DEPENDS ${_RC_DEPENDS} "${_RC_FILE}")
         ENDFOREACH(_RC_FILE)
 
