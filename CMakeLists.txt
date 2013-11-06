@@ -13,6 +13,8 @@ SET_OUTPUT_PATHS()
 INCLUDE( cmake/QtMacros.cmake )
 INCLUDE( cmake/GoogleTest.cmake )
 
+ENABLE_TESTING()
+
 IF( UNIX )
     GCC_ADD_FLAG( "-Wall" )
     GCC_ADD_FLAG( "-fvisibility=hidden" )
