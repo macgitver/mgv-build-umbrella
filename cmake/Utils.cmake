@@ -31,8 +31,8 @@ MACRO( SET_OUTPUT_PATHS )
         # For Windows:
         # If we're an MSVC IDE Build, do nothing - otherwise treat same as unicies:
         #IF( NOT MSVC_IDE )
-            SET( EXECUTABLE_OUTPUT_DIRECTORY    ${CMAKE_BINARY_DIR}/bin )
-            SET( LIBRARY_OUTPUT_DIRECTORY       ${CMAKE_BINARY_DIR}/bin )
+            SET( EXECUTABLE_OUTPUT_PATH    ${CMAKE_BINARY_DIR}/bin )
+            SET( LIBRARY_OUTPUT_PATH       ${CMAKE_BINARY_DIR}/bin )
         #ENDIF()
 
     ELSEIF( UNIX )
@@ -40,8 +40,8 @@ MACRO( SET_OUTPUT_PATHS )
         # For linux and other unicies but not macosx, output binaries and libraries to
         # $BUILD_DIR/bin
 
-        SET( EXECUTABLE_OUTPUT_DIRECTORY    ${CMAKE_BINARY_DIR}/bin )
-        SET( LIBRARY_OUTPUT_DIRECTORY       ${CMAKE_BINARY_DIR}/bin )
+        SET( EXECUTABLE_OUTPUT_PATH    ${CMAKE_BINARY_DIR}/bin )
+        SET( LIBRARY_OUTPUT_PATH       ${CMAKE_BINARY_DIR}/bin )
 
     ELSE()
 
@@ -163,3 +163,12 @@ FUNCTION( MSVC_SPLIT_SOURCES target )
     ENDIF()
 ENDFUNCTION()
 
+MACRO(LIST_SUBDIRS _out _dir)
+    FILE(GLOB _list ${_dir}/*)
+    SET(${_out} "")
+    FOREACH(_subdir ${_list})
+        IF(IS_DIRECTORY ${_subdir})
+            LIST(APPEND ${_out} ${_subdir})
+        ENDIF()
+    ENDFOREACH()
+ENDMACRO()

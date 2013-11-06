@@ -9,7 +9,7 @@ EXECUTE_PROCESS(
 
 SET( CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT_INSTALL_PREFIX} )
 
-SET( _mods Core Gui Widgets Xml Network )
+SET( _mods Core Gui Widgets Xml Network WebKit WebKitWidgets)
 
 FOREACH( _mod ${_mods} )
     FIND_PACKAGE(Qt5${_mod})
@@ -79,7 +79,7 @@ MACRO( QT_UIC out )
     QT5_WRAP_UI( ${out} ${ARGN} )
 ENDMACRO()
 
-function(QT_RCC infiles outfiles )
+macro(QT_RCC infiles outfiles )
 
     set(options)
     set(oneValueArgs)
@@ -132,7 +132,7 @@ function(QT_RCC infiles outfiles )
 
     set(${outfiles} ${${outfiles}} PARENT_SCOPE)
 
-endfunction()
+endmacro()
 
 MACRO( QT_PREPARE )
     SET( QT_USED_MODULES "" )
@@ -148,21 +148,12 @@ MACRO( QT_PREPARE )
     ENDFOREACH()
 ENDMACRO()
 
-MACRO( ADD_QT_LIBRARY _target )
+MACRO(ADVANCE_TO_QT_PROJECT _target)
+    QT5_USE_MODULES( ${_target} LINK_PRIVATE ${QT_USED_MODULES} )
 
-    ADD_LIBRARY( ${_target} ${ARGN} )
-    QT5_USE_MODULES( ${_target} ${QT_USED_MODULES} )
-    _ADD_NOCASTS()
-
-ENDMACRO( ADD_QT_LIBRARY )
-
-MACRO( ADD_QT_EXECUTABLE _target )
-
-    ADD_EXECUTABLE( ${_target} ${ARGN} )
-    QT5_USE_MODULES( ${_target} ${QT_USED_MODULES} )
     IF( QT_USED_MAIN )
-        TARGET_LINK_LIBRARIES( ${_target} Qt5::WinMain )
+        TARGET_LINK_LIBRARIES( ${_target} LINK_PRIVATE Qt5::WinMain )
     ENDIF()
-    _ADD_NOCASTS()
 
-ENDMACRO( ADD_QT_EXECUTABLE )
+    _ADD_NOCASTS()
+ENDMACRO()
